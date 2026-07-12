@@ -7,8 +7,8 @@ const axios = require('axios');
 const sendLikeRequest = async (uid, region = 'IND') => {
   const url = `https://bhuwan-like-api-p.vercel.app/like?uid=${uid}&region=${region}`;
   const headers = {
-    'X-API-KEY': 'key_be1fdinlb7m9e3tr',
-    'X-API-SECRET':'sec_2ox00fz4tthpblex',
+    'X-API-KEY': 'bhuwan',
+    'X-API-SECRET':'sec_ymat45277mrcpxqy',
     'X-CLIENT-ID': 'cli_aimguard_01F8MECHZX3TBDSZ7XRADM79XE',
     'User-Agent': 'Aimguard/1.0.0',
     'X-REQUEST-TYPE': 'redefine-like'
