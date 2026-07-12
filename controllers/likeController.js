@@ -12,8 +12,13 @@ const submitLikes = async (req, res) => {
   }
 
   const cleanRegion = (region || 'IND').toUpperCase();
-  if (cleanRegion !== 'IND') {
-    return res.status(400).json({ message: `${cleanRegion} server region is coming soon. Currently only IND is active.` });
+  
+  // ✅ YAHAN CHANGE - AG ko active karo
+  const validRegions = ['IND', 'AG'];
+  if (!validRegions.includes(cleanRegion)) {
+    return res.status(400).json({ 
+      message: `${cleanRegion} server region is not supported yet. Currently only IND and AG are active.` 
+    });
   }
 
   try {
@@ -44,7 +49,6 @@ const submitLikes = async (req, res) => {
     }
 
     // 3. Calculate Allowed Requests based on Plan and Autolike Setup
-    // If autolike is active, 1 request is reserved for autolike daily, leaving (maxReqsPerDay - 1) manual requests
     const isAutolikeActive = user.autolike?.enabled === true && plan.allowAutolike === true;
     const maxManualRequests = isAutolikeActive ? Math.max(1, plan.maxReqsPerDay - 1) : plan.maxReqsPerDay;
 
@@ -119,8 +123,13 @@ const runFreeTrial = async (req, res) => {
   }
 
   const cleanRegion = (region || 'IND').toUpperCase();
-  if (cleanRegion !== 'IND') {
-    return res.status(400).json({ message: `${cleanRegion} server region is coming soon. Currently only IND is active.` });
+  
+  // ✅ YAHAN CHANGE - AG ko active karo
+  const validRegions = ['IND', 'AG'];
+  if (!validRegions.includes(cleanRegion)) {
+    return res.status(400).json({ 
+      message: `${cleanRegion} server region is not supported yet. Currently only IND and AG are active.` 
+    });
   }
 
   try {
@@ -202,8 +211,13 @@ const setupAutolike = async (req, res) => {
         return res.status(400).json({ message: 'UID is required to enable Autolike.' });
       }
       const cleanRegion = (region || 'IND').toUpperCase();
-      if (cleanRegion !== 'IND') {
-        return res.status(400).json({ message: `${cleanRegion} server region is coming soon.` });
+      
+      // ✅ YAHAN CHANGE - AG ko active karo
+      const validRegions = ['IND', 'AG'];
+      if (!validRegions.includes(cleanRegion)) {
+        return res.status(400).json({ 
+          message: `${cleanRegion} server region is not supported yet. Currently only IND and AG are active.` 
+        });
       }
 
       user.autolike = {
