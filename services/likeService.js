@@ -5,10 +5,10 @@ const axios = require('axios');
  * Endpoint: https://like-khaki-seven.vercel.app/like?uid=${uid}&region=${region}
  */
 const sendLikeRequest = async (uid, region = 'IND') => {
-  const url = `http://127.0.0.1:5000/like?uid=${uid}&region=${region}`;
+  const url = `https://bhuwan-like-api-p.vercel.app/like?uid=${uid}&region=${region}`;
   const headers = {
-    'X-API-KEY': 'key_be1fdinlb7m9e3tr',
-    'X-API-SECRET':'sec_2ox00fz4tthpblex',
+    'X-API-KEY': 'key_cwuc0em02bosl20k',
+    'X-API-SECRET':'sec_e4wutohjzpn7jeob',
     'X-CLIENT-ID': 'cli_aimguard_01F8MECHZX3TBDSZ7XRADM79XE',
     'User-Agent': 'Aimguard/1.0.0',
     'X-REQUEST-TYPE': 'redefine-like'
