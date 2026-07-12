@@ -20,7 +20,7 @@ const seedDB = async () => {
     if (!announcementConfig) {
       await Config.create({
         key: 'ANNOUNCEMENT',
-        value: 'Welcome to Aimguard Like Bot! Active server: IND. NX and AG servers coming soon.',
+        value: 'Welcome to Aimguard Like Bot! Active servers: IND and AG. NX server coming soon.',
         description: 'Global notification alert banner displayed on dashboard'
       });
       console.log('[Seeder] ANNOUNCEMENT seeded');
@@ -41,7 +41,8 @@ const seedDB = async () => {
           features: [
             '1 request per day (any UID)',
             '220 to 300+ likes per request',
-            'IND Region Supported (AG/NX coming soon)',
+            'IND & AG Region Support',
+            'NX Server (Coming Soon)',
             'Priority support'
           ],
           isActive: true
@@ -58,7 +59,8 @@ const seedDB = async () => {
             '220 to 300+ likes per request',
             '24/7 Autolike Setup (automatic daily likes)',
             'Keep 1 manual request available during autolike',
-            'IND Region Supported (AG/NX coming soon)',
+            'IND & AG Region Support',
+            'NX Server (Coming Soon)',
             'Priority support'
           ],
           isActive: true
@@ -82,23 +84,53 @@ const seedDB = async () => {
       ]);
       console.log('[Seeder] Pricing plans successfully seeded.');
     } else {
-      // If plans exist, let's make sure they have maxReqsPerDay and allowAutolike fields
+      // If plans exist, update them with AG support
       const existingPlans = await Plan.find({});
       for (const plan of existingPlans) {
         let updated = false;
+        
+        // Update features to include AG
+        if (plan.features && Array.isArray(plan.features)) {
+          const newFeatures = plan.features.map(f => {
+            if (f.includes('IND Region Supported (AG/NX coming soon)')) {
+              return f.replace('IND Region Supported (AG/NX coming soon)', 'IND & AG Region Support');
+            }
+            if (f.includes('IND Region Supported')) {
+              return f.replace('IND Region Supported', 'IND & AG Region Support');
+            }
+            return f;
+          });
+          
+          // Add AG support if not present
+          if (!newFeatures.some(f => f.includes('AG'))) {
+            // Find index of IND related feature
+            const indIndex = newFeatures.findIndex(f => f.includes('IND'));
+            if (indIndex !== -1) {
+              newFeatures[indIndex] = newFeatures[indIndex].replace('IND', 'IND & AG');
+            }
+          }
+          
+          plan.features = newFeatures;
+          updated = true;
+        }
+        
+        // Ensure maxReqsPerDay exists
         if (plan.maxReqsPerDay === undefined) {
           plan.maxReqsPerDay = plan.durationDays === 7 ? 1 : (plan.durationDays === 30 ? 2 : 3);
           updated = true;
         }
+        
+        // Ensure allowAutolike exists
         if (plan.allowAutolike === undefined) {
           plan.allowAutolike = plan.durationDays !== 7;
           updated = true;
         }
+        
         if (updated) {
           await plan.save();
         }
       }
-      console.log('[Seeder] Checked and updated existing plans fields.');
+      console.log('[Seeder] Checked and updated existing plans fields with AG support.');
     }
 
     console.log('[Seeder] Database configuration audit completed successfully.');
