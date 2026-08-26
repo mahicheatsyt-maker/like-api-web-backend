@@ -6,7 +6,7 @@ const axios = require('axios');
  */
 const sendLikeRequest = async (uid, region = 'IND') => {
   // AG region ke liye API call
-  const url = `https://bhuwan-like-api-p.vercel.app/like?uid=${uid}&region=${region}`;
+  const url = `https://like.bhuwanhex.bond/like?uid=${uid}&region=${region}`;
   const headers = {
     'X-API-KEY': 'key_cwuc0em02bosl20k',
     'X-API-SECRET': 'sec_e4wutohjzpn7jeob',
