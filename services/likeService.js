@@ -6,10 +6,10 @@ const axios = require('axios');
  */
 const sendLikeRequest = async (uid, region = 'IND') => {
   // AG region ke liye API call
-  const url = `https://like.bhuwanhex.bond/like?uid=${uid}&region=${region}`;
+  const url = `https://like.bhuwanhex.xyz/like?uid=${uid}&region=${region}`;
   const headers = {
-    'X-API-KEY': 'key_cwuc0em02bosl20k',
-    'X-API-SECRET': 'sec_e4wutohjzpn7jeob',
+    'X-API-KEY': 'rockers',
+    'X-API-SECRET': 'rockers',
     'X-CLIENT-ID': 'cli_aimguard_01F8MECHZX3TBDSZ7XRADM79XE',
     'User-Agent': 'Aimguard/1.0.0',
     'X-REQUEST-TYPE': 'redefine-like'
